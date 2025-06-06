@@ -1,0 +1,335 @@
+:root {
+   --primary-color: #00ffe1; /* Neon Cyan */
+--secondary-color: #1f1f1f;
+    --dark-bg: #121212;
+    --light-bg: #1e1e1e;
+    --text-color: #ffff;
+    --font-primary: 'Montserrat', sans-serif;
+    --font-secondary: 'Roboto', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+   
+    font-family: var(--font-secondary);
+    background-color: var(--dark-bg);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.sticky-header {
+    background: rgba(30, 30, 30, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    border-bottom: 1px solid var(--primary-color);
+}
+
+.sticky-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--font-primary);
+    font-size: 1.8rem;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.logo span {
+    color: var(--primary-color);
+}
+
+.sticky-header nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.sticky-header nav ul li {
+    margin-left: 20px;
+}
+
+.sticky-header nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.sticky-header nav a:hover {
+    color: var(--primary-color);
+}
+
+/* Hero Section */
+#home {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background:url('') no-repeat center center/cover;
+}
+
+.hero h1 {
+    font-family: var(--font-primary);
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    display: inline-block;
+    background: var(--primary-color);
+    color: var(--text-color);
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px var(--primary-color);
+}
+
+.cta-button:hover {
+    background: var(--secondary-color);
+    box-shadow: 0 0 25px var(--secondary-color);
+    transform: translateY(-3px);
+}
+
+/* Sections */
+section {
+    padding: 6rem 0;
+}
+
+section:nth-child(odd) {
+    background-color: var(--light-bg);
+}
+
+h2 {
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--primary-color);
+}
+
+/* Forms */
+form {
+    max-width: 600px;
+    margin: auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.payment-methods {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.payment-btn {
+    flex-grow: 1;
+    background: #333;
+    color: var(--text-color);
+    border: 1px solid #555;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px var(--primary-color);
+}
+
+.submit-btn:hover {
+    background: var(--secondary-color);
+    box-shadow: 0 0 25px var(--secondary-color);
+}
+
+/* Countdown Timer */
+#countdown-timer {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+#timer {
+    font-family: var(--font-primary);
+    font-size: 3rem;
+    color: var(--primary-color);
+}
+
+/* Popup */
+.hidden {
+    display: none !important;
+}
+
+#popup-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.popup-content {
+    background: var(--light-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 20px var(--primary-color);
+}
+
+.popup-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+#popup-close {
+    margin-top: 1.5rem;
+    padding: 10px 20px;
+    background: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#popup-close:hover {
+    background: var(--secondary-color);
+}
+
+/* FAQs */
+.faq-item {
+    background: var(--dark-bg);
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    border-radius: 5px;
+    border-left: 3px solid var(--primary-color);
+}
+
+.faq-item h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+/* How to Use */
+#how-to-use ol {
+    list-style-position: inside;
+    max-width: 600px;
+    margin: auto;
+}
+
+#how-to-use li {
+    background: var(--dark-bg);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+    .sticky-header .container {
+        flex-direction: column;
+    }
+
+    .sticky-header nav {
+        margin-top: 10px;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+    }
+
+    section {
+        padding: 4rem 0;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+}
