@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Diamonds - Recharge Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="sticky-header">
+  <div class="container">
+    <a href="#" class="logo">ML<span>Diamonds</span></a>
+    <div class="menu-toggle" id="menu-toggle">&#8942;</div>
+    <nav id="navbar">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#recharge">Recharge</a></li>
+        <li><a href="#faqs">FAQs</a></li>
+        <li><a href="#how-to-use">HowtoUse</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main>
+    <section id="home">
+        <div class="hero">
+            <h1>Welcome to jeushMikasal Diamonds store</h1>
+            <p>Your one-stop shop for Mobile Legends Diamonds</p>
+            <a href="#recharge" class="cta-button">Recharge Now</a>
+        </div>
+    </section><section id="recharge">
+    <div class="container">
+        <h2>Recharge Diamonds</h2>
+        <form id="recharge-form">
+            <div class="form-group">
+                <label for="user-id">User ID</label>
+                <input type="text" id="user-id" name="user-id" required>
+            </div>
+            <div class="form-group">
+                <label for="server-id">Server ID</label>
+                <input type="text" id="server-id" name="server-id" required>
+            </div>
+            <div class="form-group">
+                <label for="diamond-amount">Select Diamond Amount</label>
+                <select id="diamond-amount" name="diamond-amount" required>
+                    <option value="">--Please choose an option--</option>
+                    <option value="100">100 Diamonds</option>
+                    <option value="250">250 Diamonds</option>
+                    <option value="500">500 Diamonds</option>
+                    <option value="1000">1000 Diamonds(Rs100)</option>
+                    <option value="2000">2000 Diamonds</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Payment Method</label>
+                <div class="payment-methods">
+                    <button type="button" class="payment-btn" data-method="UPI">UPI</button>
+                    <button type="button" class="payment-btn" data-method="Paytm">Paytm</button>
+                    <button type="button" class="payment-btn" data-method="GPay">GPay</button>
+                </div>
+                <input type="hidden" id="payment-method" name="payment-method" required>
+            </div>
+            <div class="form-group">
+                <label for="payment-screenshot">Upload Payment Screenshot</label>
+                <input type="file" id="payment-screenshot" name="payment-screenshot" accept="image/*" required>
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+        <div id="countdown-timer" class="hidden">
+            <h3>Processing your request...</h3>
+            <div id="timer">05:00</div>
+        </div>
+    </div>
+</section>
+
+<section id="faqs">
+    <div class="container">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <h3>How long does it take to get the diamonds?</h3>
+            <p>Typically, diamonds are credited to your account within 5-10 minutes after successful payment verification.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What payment methods do you accept?</h3>
+            <p>We accept payments via UPI, Paytm, and Google Pay.</p>
+        </div>
+         <div class="faq-item">
+            <h3>Is my information safe?</h3>
+            <p>Yes, we use secure protocols to handle your data. We only require your User ID and Server ID to process the recharge.</p>
+        </div>
+    </div>
+</section>
+
+<section id="how-to-use">
+    <div class="container">
+        <h2>How to Use</h2>
+        <ol>
+            <li>Enter your Mobile Legends User ID and Server ID.</li>
+            <li>Select the desired diamond amount.</li>
+            <li>Choose your preferred payment method and complete the payment.</li>
+            <li>Upload a screenshot of the completed payment.</li>
+            <li>Wait for the confirmation popup. Your diamonds will be credited shortly.</li>
+        </ol>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="container">
+        <h2>Contact Us</h2>
+        <form id="contact-form" action="https://formspree.io/f/mjkrgwvq" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+            <p id="contact-status" style="margin-top: 10px;"></p>
+        </form>
+    </div>
+</section>
+
+</main><div id="popup-message" class="hidden">
+    <div class="popup-content">
+        <h3 id="popup-title"></h3>
+        <p id="popup-text"></p>
+        <button id="popup-close">Close</button>
+    </div>
+</div><script src="script.js"></script></body>
+  </html>
