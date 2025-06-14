@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      margin: 0;
+      padding: 0;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    img.logo {
+      width: 100px;
+      height: auto;
+      margin-bottom: 15px;
+      animation: fadeInDown 1s ease-out forwards;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      animation: fadeInDown 1s ease-out forwards;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .description {
+      font-size: 1.1em;
+      max-width: 500px;
+      margin-bottom: 30px;
+      animation: fadeInDown 1.2s ease-out forwards;
+      color: #f0f0f0;
+    }
+
+    .enterbtn {
+      padding: 12px 24px;
+      font-size: 1em;
+      font-weight: 600;
+      color: #0072ff;
+      background-color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .enterbtn:hover {
+      background-color: #0072ff;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 0.9em;
+      color: #ffffffcc;
+    }
+
+    .footer a {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    .footer a:hover {
+      color: #a3e4ff;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 🌥 Cloud icon -->
+  <img src="cloud.jpeg" alt="Cloud Icon" class="logo">
+
+  <h1>🌤 Weather App</h1>
+
+  <p class="description">Stay updated with the latest weather conditions from around the world. Accurate, real-time data powered by OpenWeather.</p>
+
+  <button onclick="goToPage()" class="enterbtn">Enter App</button>
+
+  <footer class="footer">
+    <p>
+      Made by <strong>Mikasal Marak</strong> | Weather data from
+      <a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer">OpenWeather</a>
+    </p>
+  </footer>
+
+  <script>
+    function goToPage() {
+      window.location.href = "index2.html";
+    }
+  </script>
+</body>
+</html>
