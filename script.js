@@ -1,115 +1,148 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const rechargeForm = document.getElementById('recharge-form');
-    const countdownTimerEl = document.getElementById('countdown-timer');
-    const timerEl = document.getElementById('timer');
-    const popup = document.getElementById('popup-message');
-    const popupTitle = document.getElementById('popup-title');
-    const popupText = document.getElementById('popup-text');
-    const popupClose = document.getElementById('popup-close');
-    const paymentBtns = document.querySelectorAll('.payment-btn');
-    const paymentMethodInput = document.getElementById('payment-method');
+// Autocomplete city names using GeoDB Cities API
+const cityInput = document.getElementById("cityInput");
+const datalist = document.getElementById("citySuggestions");
 
-    // Smooth Scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
+cityInput.addEventListener("input", async () => {
+    const query = cityInput.value.trim();
+    if (query.length < 2) return;
 
-    // Payment button selection logic
-    paymentBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            paymentBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            paymentMethodInput.value = btn.dataset.method;
-        });
-    });
-
-    // Recharge Form Submission Logic
-    rechargeForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const userId = document.getElementById('user-id').value;
-        const serverId = document.getElementById('server-id').value;
-        const diamondAmount = document.getElementById('diamond-amount').value;
-        const paymentMethod = document.getElementById('payment-method').value;
-        const screenshot = document.getElementById('payment-screenshot').files[0];
-
-        if (!userId || !serverId || !diamondAmount || !paymentMethod || !screenshot) {
-            alert('Please fill out all fields.');
-            return;
+    const geoUrl = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${query}&limit=5`;
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '6205d2f407msh45a5e77f3e8b26bp1499e5jsndd78c4e48ad1',
+            'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
         }
+    };
 
-        rechargeForm.classList.add('hidden');
-        countdownTimerEl.classList.remove('hidden');
+    try {
+        const response = await fetch(geoUrl, options);
+        const result = await response.json();
+        datalist.innerHTML = "";
+        result.data.forEach(city => {
+            const option = document.createElement("option");
+            option.value = `${city.city}, ${city.country}`;
+            datalist.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Autocomplete error:", error);
+    }
+});
 
-        let timeLeft = 1 * 60; // 1 minute
-        const timerInterval = setInterval(() => {
-            const minutes = Math.floor(timeLeft / 60);
-            let seconds = timeLeft % 60;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            timerEl.textContent = `${minutes}:${seconds}`;
-            if (--timeLeft < 0) {
-                clearInterval(timerInterval);
-                showPopup();
-            }
-        }, 1000);
-    });
+// Main weather fetch function
+async function getWeather(city = null) {
+    const apiKey = "26fb1c52cda924bcb5e2f02ba7b8a0b8";
+    const resultDiv = document.getElementById("result");
 
-    function showPopup() {
-        const isSuccess = Math.random() > 0.3;
-        if (isSuccess) {
-            popupTitle.textContent = "Payment Completed Successfully";
-            popupText.textContent = "Your diamonds have been credited to your account.";
-        } else {
-            popupTitle.textContent = "Payment Not Found";
-            popupText.textContent = "We could not verify your payment. Please contact support.";
-        }
-        popup.classList.remove('hidden');
+    if (!city) {
+        city = cityInput.value;
     }
 
-    popupClose.addEventListener('click', () => {
-        popup.classList.add('hidden');
-        rechargeForm.classList.remove('hidden');
-        countdownTimerEl.classList.add('hidden');
-        rechargeForm.reset();
-        paymentBtns.forEach(b => b.classList.remove('active'));
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("City not found!");
+
+        const data = await response.json();
+        const sunrise = new Date(data.sys.sunrise * 1000).toLocaleTimeString();
+        const sunset = new Date(data.sys.sunset * 1000).toLocaleTimeString();
+
+        resultDiv.innerHTML = `
+            <h3>🌍 Weather in ${data.name}, ${data.sys.country}</h3>
+            <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="Weather Icon">
+            🌡 Temperature: ${data.main.temp}°C<br>
+            🥵 Feels Like: ${data.main.feels_like}°C<br>
+            🌥 Condition: ${data.weather[0].description}<br>
+            💧 Humidity: ${data.main.humidity}%<br>
+            🧭 Pressure: ${data.main.pressure} hPa<br>
+            💨 Wind: ${data.wind.speed} m/s<br>
+            ☁️ Cloudiness: ${data.clouds.all}%<br>
+            🌄 Sunrise: ${sunrise}<br>
+            🌇 Sunset: ${sunset}<br>
+        `;
+
+        alert(`✅ Successfully shown weather of ${data.name} ,thank you for using this weather app made by Mikasal Marak.. `);
+    } catch (error) {
+        resultDiv.innerHTML = `<span style="color: yellow;">${error.message}</span>`;
+    }
+}
+
+// Detect current location
+function getLocationWeather() {
+    if (!navigator.geolocation) {
+        alert("Geolocation is not supported.");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude: lat, longitude: lon } = position.coords;
+        const apiKey = "26fb1c52cda924bcb5e2f02ba7b8a0b8";
+        const reverseUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+
+        try {
+            const response = await fetch(reverseUrl);
+            const data = await response.json();
+            const confirmUse = confirm(`📍 You are currently in ${data.name}. Do you want to get weather for this location?`);
+            if (confirmUse) getWeather(data.name);
+        } catch (error) {
+            alert("Unable to detect location weather.");
+        }
     });
+}
 
-    // ✅ Contact Form Submission (Formspree)
-    const contactForm = document.getElementById('contact-form');
-    const contactStatus = document.getElementById('contact-status');
+// UI interaction handlers
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.querySelector('input[type="text"]');
+    const container = document.querySelector('.weather-container');
+    const footer = document.querySelector('.footer');
+    const useLocationButton = document.querySelector('#use-location');
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
+    if (input && container && footer) {
+        input.addEventListener('focus', () => {
+            container.classList.add('expand');
+            footer.classList.add('hide');
+        });
 
-            const formData = new FormData(contactForm);
-
-            try {
-                const response = await fetch(contactForm.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    contactStatus.style.color = "green";
-                    contactStatus.textContent = "Thank you! Your message has been sent.";
-                    contactForm.reset();
-                } else {
-                    contactStatus.style.color = "red";
-                    contactStatus.textContent = "Oops! Something went wrong. Please try again.";
-                }
-            } catch (error) {
-                contactStatus.style.color = "red";
-                contactStatus.textContent = "Error submitting form. Please check your connection.";
-            }
+        input.addEventListener('blur', () => {
+            container.classList.remove('expand');
+            footer.classList.remove('hide');
         });
     }
+
+    if (useLocationButton) {
+        useLocationButton.addEventListener('click', () => {
+            if (container && footer) {
+                container.classList.add('expand');
+                footer.classList.add('hide');
+
+                setTimeout(() => {
+                    container.classList.remove('expand');
+                    footer.classList.remove('hide');
+                }, 4000);
+            }
+
+            getLocationWeather(); // Also trigger location fetch here
+        });
+    }
+});
+
+const weatherContainer = document.querySelector('.weather-container');
+const searchBtn = document.querySelector('#search-btn');
+const locationBtn = document.querySelector('#location-btn');
+const footer = document.querySelector('.footer');
+
+function expandContainer() {
+    weatherContainer.classList.add('expand');
+    footer?.classList.add('hide');
+}
+
+searchBtn?.addEventListener('click', () => {
+    expandContainer();
+    // Your weather fetch logic here
+});
+
+locationBtn?.addEventListener('click', () => {
+    expandContainer();
+    // Your location fetch logic here
 });
